@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="353.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLFormularioActividadController">
+   <children>
+      <ImageView fitHeight="527.0" fitWidth="945.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Fondo-CU.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="27.0" layoutY="14.0" text="Formulario actividad">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="126.0" text="Nombre:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="27.0" layoutY="179.0" text="Descripción:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <TextField fx:id="txfNombre" layoutX="103.0" layoutY="120.0" prefHeight="39.0" prefWidth="819.0" />
+      <TextArea fx:id="txAreaDescripcion" layoutX="19.0" layoutY="236.0" prefHeight="120.0" prefWidth="898.0" />
+      <DatePicker fx:id="dpFechaEntrega" layoutX="230.0" layoutY="378.0" />
+      <Label layoutX="22.0" layoutY="384.0" text="Fecha límite de entrega:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Button fx:id="btnGuardar" layoutX="490.0" layoutY="450.0" mnemonicParsing="false" onAction="#clicBotonGuardar" prefHeight="39.0" prefWidth="152.0" style="-fx-background-color: #8BCDF1;" text="Guardar" />
+      <Button fx:id="btnCancelar" layoutX="675.0" layoutY="450.0" mnemonicParsing="false" onAction="#clicBotonCancelar" prefHeight="39.0" prefWidth="152.0" style="-fx-background-color: #FF6D60;" text="Cancelar" />
+      <Label fx:id="lbTitulo" layoutX="27.0" layoutY="59.0" prefHeight="27.0" prefWidth="293.0" textAlignment="RIGHT">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="513.0" layoutY="384.0" text="Fecha creacion:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <DatePicker fx:id="dpFechaCreacion" layoutX="656.0" layoutY="378.0" />
+   </children>
+</AnchorPane>

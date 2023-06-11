@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLFormularioEntregaController">
+   <children>
+      <ImageView fitHeight="584.0" fitWidth="996.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Fondo-CU.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbNombreActividad" layoutX="29.0" layoutY="27.0" prefHeight="27.0" prefWidth="730.0">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Label>
+      <Text layoutX="25.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentarios:" />
+      <TextArea fx:id="txAreaComentariosAlumno" layoutX="26.0" layoutY="370.0" prefHeight="173.0" prefWidth="461.0" />
+      <ListView fx:id="listViewArchivos" layoutX="507.0" layoutY="130.0" prefHeight="249.0" prefWidth="461.0" />
+      <Label layoutX="507.0" layoutY="98.0" text="Archivos:" />
+      <Button layoutX="613.0" layoutY="421.0" mnemonicParsing="false" onAction="#clicBotonEliminar" text="Eliminar " />
+      <Button layoutX="507.0" layoutY="421.0" mnemonicParsing="false" onAction="#clicBotonAgregar" text="Agregar" />
+      <Button layoutX="613.0" layoutY="496.0" mnemonicParsing="false" onAction="#clicBotonGuardar" prefHeight="39.0" prefWidth="162.0" text="Guardar" />
+      <Button layoutX="806.0" layoutY="496.0" mnemonicParsing="false" onAction="#clicBotonCancelar" prefHeight="39.0" prefWidth="162.0" text="Cancelar" />
+      <Label fx:id="lbTamanioMaximo" layoutX="507.0" layoutY="386.0" prefHeight="27.0" prefWidth="241.0" />
+      <Label layoutX="25.0" layoutY="14.0" text="Formulario entrega">
+         <font>
+            <Font name="System Bold" size="33.0" />
+         </font></Label>
+      <Label fx:id="lbTitulo" layoutX="29.0" layoutY="63.0" prefHeight="27.0" prefWidth="472.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label fx:id="lbNombreActividad" layoutX="35.0" layoutY="127.0" prefHeight="58.0" prefWidth="443.0" />
+      <Label layoutX="29.0" layoutY="185.0" text="Descripción:" />
+      <Label layoutX="35.0" layoutY="98.0" text="Nombre:" />
+      <TextArea fx:id="txAreaDescripcion" layoutX="25.0" layoutY="223.0" prefHeight="99.0" prefWidth="461.0" />
+   </children>
+</AnchorPane>

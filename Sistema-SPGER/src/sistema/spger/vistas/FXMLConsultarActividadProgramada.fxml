@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLConsultarActividadProgramadaController">
+   <children>
+      <ImageView fitHeight="579.0" fitWidth="1020.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Fondo-CU.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tvActividadesProgramadas" layoutX="27.0" layoutY="119.0" prefHeight="373.0" prefWidth="971.0">
+        <columns>
+          <TableColumn fx:id="tcNombre" prefWidth="702.0" text="Nombre" />
+          <TableColumn fx:id="tcFechaLimiteEntrega" prefWidth="258.0" text="Fecha límite de entrega" />
+        </columns>
+      </TableView>
+      <Button layoutX="633.0" layoutY="510.0" mnemonicParsing="false" onAction="#clicBotonAgregarTarea" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: BAD7E9;" text="Agregar tarea" />
+      <Button layoutX="804.0" layoutY="510.0" mnemonicParsing="false" onAction="#clicBotonModificar" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: FF6969;" text="Modificar" />
+      <TextField fx:id="tfBusqueda" layoutX="27.0" layoutY="61.0" />
+      <Label layoutX="27.0" layoutY="25.0" text="Para ver el detalle de una actividad, de doble clic sobre una de las filas de la tabla">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

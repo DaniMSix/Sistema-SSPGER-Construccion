@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="399.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLInicioSesionController">
+   <children>
+      <ImageView fitHeight="416.0" fitWidth="724.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Pantalla-principal.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="376.0" prefHeight="407.0" prefWidth="348.0">
+         <children>
+            <Label layoutX="62.0" layoutY="48.0" text="Inicio sesión">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="59.0" layoutY="197.0" text="Contraseña" />
+            <TextField fx:id="tfCorreo" layoutX="62.0" layoutY="142.0" />
+            <Label layoutX="59.0" layoutY="102.0" text="Correo" />
+            <Button layoutX="110.0" layoutY="300.0" mnemonicParsing="false" onAction="#clicIniciarSesion" style="-fx-background-color: #8BCDF1;" text="Iniciar sesión">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <PasswordField fx:id="pfContrasenia" layoutX="61.0" layoutY="233.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

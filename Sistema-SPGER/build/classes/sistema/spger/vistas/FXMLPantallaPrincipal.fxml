@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="anchoPnPrincipal" prefHeight="513.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLPantallaPrincipalController">
+   <children>
+      <MenuBar fx:id="menuBOpciones" prefHeight="39.0" prefWidth="817.0" style="-fx-background-color: #7FBCD2;">
+        <menus>
+          <Menu mnemonicParsing="false" text="Cambiar de vista">
+            <items>
+                  <MenuItem fx:id="mItemAdministrador" mnemonicParsing="false" onAction="#clicMItemAdministrador" text="Administrador" />
+                  <MenuItem fx:id="mItemProfesor" mnemonicParsing="false" onAction="#clicMItemProfesor" text="Profesor" />
+                  <MenuItem fx:id="mItemDirector" mnemonicParsing="false" onAction="#clicMItemDirector" text="Director" />
+                  <MenuItem fx:id="mItemResponsableCA" mnemonicParsing="false" onAction="#clicMItemResponsableCA" text="Responsable CA" />
+                  <MenuItem fx:id="mItemEstudiante" mnemonicParsing="false" onAction="#clicMItemEstudiante" text="Estudiante" />
+                
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ImageView fitHeight="476.0" fitWidth="817.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Pantalla-principal_1.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="511.0" layoutY="123.0" prefHeight="136.0" prefWidth="186.0" text="¿Qué deseas" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="528.0" layoutY="205.0" text="hacer hoy?">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <Label fx:id="lbNombreUsuario" layoutX="315.0" layoutY="205.0">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLConsultarEntregasController">
+   <children>
+      <ImageView fitHeight="612.0" fitWidth="1059.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Fondo-CU.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tvEntregas" layoutX="30.0" layoutY="115.0" prefHeight="353.0" prefWidth="1004.0">
+        <columns>
+          <TableColumn fx:id="tcNombreActividad" prefWidth="494.0" text="Nombre actividad" />
+          <TableColumn fx:id="tcFechaLimiteEntrega" prefWidth="198.0" text="Fecha límite entrega" />
+            <TableColumn fx:id="tcEstado" prefWidth="176.0" text="Estado" />
+            <TableColumn fx:id="tcCalificacion" prefWidth="124.0" text="Calificacion" />
+        </columns>
+      </TableView>
+      <Label layoutX="30.0" layoutY="14.0" text="Para ver el detalle de una actividad, de doble clic sobre una de las filas de la tabla">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfBusqueda" layoutX="30.0" layoutY="60.0" prefHeight="39.0" prefWidth="266.0" />
+      <Button layoutX="670.0" layoutY="493.0" mnemonicParsing="false" onAction="#clicBotonEntregar" prefHeight="39.0" prefWidth="172.0" style="-fx-background-color: BAD7E9;" text="Entregar" />
+      <Button layoutX="862.0" layoutY="493.0" mnemonicParsing="false" onAction="#clicBotonModificar" prefHeight="39.0" prefWidth="172.0" style="-fx-background-color: FF6969;" text="Modificar" />
+   </children>
+</AnchorPane>

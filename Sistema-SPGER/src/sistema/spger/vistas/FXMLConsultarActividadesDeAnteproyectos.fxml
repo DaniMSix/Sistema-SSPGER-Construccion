@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="651.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLConsultarActividadesDeAnteproyectosController">
+   <children>
+      <ImageView fitHeight="651.0" fitWidth="1263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/imagenes/Fondo-CU.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tvActividadesAnteproyectos" layoutX="32.0" layoutY="117.0" onMouseClicked="#dobleClicFila" prefHeight="417.0" prefWidth="1093.0">
+        <columns>
+          <TableColumn fx:id="tcNombreActividad" prefWidth="416.0" text="Actividad" />
+          <TableColumn fx:id="tcFechaLimiteEntrega" prefWidth="252.0" text="Fecha limite de entrega" />
+            <TableColumn fx:id="tcEstado" prefWidth="517.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Button fx:id="bttEvaluar" disable="true" layoutX="737.0" layoutY="575.0" mnemonicParsing="false" onMouseClicked="#clicBotonEvaluar" prefHeight="41.0" prefWidth="172.0" style="-fx-background-color: A6D0DD;" text="Evaluar" />
+      <Button layoutX="928.0" layoutY="576.0" mnemonicParsing="false" onMouseClicked="#clicBotonSalir" prefHeight="39.0" prefWidth="172.0" style="-fx-background-color: FF6969;" text="Salir" />
+      <TextField fx:id="tfBusqueda" layoutX="32.0" layoutY="60.0" />
+   </children>
+</AnchorPane>
