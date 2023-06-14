@@ -111,4 +111,26 @@ public class DAOCurso {
         return respuesta;
     }
     
+    public static POJCurso obtenerIdCurso(String nombreCurso) throws SQLException {
+        POJCurso respuestaBD = new POJCurso();
+        ModConexionBD abrirConexion = new ModConexionBD();
+        Connection conexion = abrirConexion.getConnection();
+        if (conexion != null) {
+            try {
+                String consulta = "SELECT idCurso FROM curso WHERE nombre = ?";
+                PreparedStatement prepararSentencia = conexion.prepareStatement(consulta);
+                prepararSentencia.setString(1, nombreCurso);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                respuestaBD.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                if (resultado.next()) {
+                    respuestaBD.setIdCurso(resultado.getInt("idCurso"));
+                }
+            } catch (SQLException e) {
+                respuestaBD.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuestaBD.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuestaBD;
+    }
 }

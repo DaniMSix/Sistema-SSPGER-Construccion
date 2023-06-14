@@ -11,6 +11,7 @@ public class POJCurso {
     private int seccion;
     private String periodo;
     private int idUsuario;
+    private int codigoRespuesta;
 
     public int getIdCurso() {
         return idCurso;
@@ -75,6 +76,13 @@ public class POJCurso {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-        
 
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
+    }
+        
 }

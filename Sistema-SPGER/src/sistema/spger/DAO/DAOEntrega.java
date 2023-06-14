@@ -203,6 +203,9 @@ public class DAOEntrega {
     }
     
     public static int registrarCalificacion(POJEntrega entregaARegistrar) throws SQLException {
+        System.err.println("calificacion"+ entregaARegistrar.getCalificacion());
+        System.err.println("observacion" + entregaARegistrar.getObservacionProfesor());
+        System.err.println("idActividad" + entregaARegistrar.getActividad_idActividad());
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;

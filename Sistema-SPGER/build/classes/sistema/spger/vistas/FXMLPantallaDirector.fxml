@@ -7,13 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistema.spger.controladores.FXMLPantallaDirectorController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLPantallaDirectorController">
    <children>
       <ImageView fitHeight="446.0" fitWidth="783.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../utils/imagenes/Fondo-General.png" />
          </image>
       </ImageView>
+      <Button layoutX="253.0" layoutY="181.0" mnemonicParsing="false" onAction="#clicBotonConsultarAnteproyectos" style="-fx-background-color: AEE2FF;" text="Consultar anteproyectos" />
    </children>
 </AnchorPane>

@@ -42,23 +42,23 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
     private TableColumn tcFechaLimiteEntrega;
     private ObservableList<POJActividad> actividades;
     POJUsuario estudianteActual;
-    private int idEstudiante = 5;
-    private int idCurso = 1;
+    private int idEstudiante;
+    private int idCurso;
     @FXML
     private TextField tfBusqueda;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configurarTablaUsuarios();
-        try {
-            cargarInformacionTabla();
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLConsultarActividadProgramadaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
-    public void recibirInformacionEstudiante(POJUsuario usuarioLogueado) {
-        estudianteActual = usuarioLogueado;
+    public void inicializarInformacion(int idEstudianteLogueado, int idCursoEstudiante) throws SQLException {
+        idEstudiante = idEstudianteLogueado;
+        idCurso = idCursoEstudiante;
+        configurarTablaUsuarios();
+        cargarInformacionTabla();
+        System.out.println("Pantalla actividad");
+        System.out.println("idEstudiante " + idEstudiante);
+        System.out.println("idCurso " + idCurso);
     }
 
     public void configurarTablaUsuarios() {
@@ -69,6 +69,8 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
    public void cargarInformacionTabla() throws SQLException {
     actividades = FXCollections.observableArrayList();
     POJActividadRespuesta respuestaBD = DAOActividad.obtenerActividadesProgramadas(idEstudiante, idCurso);
+       System.err.println("Actividades tabla");
+       System.err.println("codigo " + respuestaBD.getCodigoRespuesta());
 
     switch (respuestaBD.getCodigoRespuesta()) {
         case Constantes.ERROR_CONEXION:

@@ -3,6 +3,7 @@ package sistema.spger.controladores;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class FXMLFormularioEntregaController implements Initializable {
         // TODO
     }
     
-    public void inicializarInformacionFormulario(String tipoClicBoton, POJActividadEntrega actividadEdicion){
+    public void inicializarInformacionFormulario(String tipoClicBoton, POJActividadEntrega actividadEdicion) throws SQLException{
        
        // this.interfazNotificacion = interfazNotificacion;
         actividadInformacion =  actividadEdicion;
@@ -119,7 +120,7 @@ public class FXMLFormularioEntregaController implements Initializable {
         return informacionEntrega;
     }
     
-    public void asignarCamposInformacion(int idEntrega){
+    public void asignarCamposInformacion(int idEntrega) throws SQLException{
         lbNombreActividad.setText(actividadInformacion.getNombre());
         txAreaDescripcion.setText(actividadInformacion.getDescripcion());
         txAreaComentariosAlumno.setText(actividadInformacion.getComentariosAlumno());
@@ -167,7 +168,7 @@ public class FXMLFormularioEntregaController implements Initializable {
     }
     
     @FXML
-    private void clicBotonGuardar(ActionEvent event) {
+    private void clicBotonGuardar(ActionEvent event) throws SQLException {
         if (tipoBoton.equals("Registrar")) {
             POJEntrega entregaInformacion = new POJEntrega();
 

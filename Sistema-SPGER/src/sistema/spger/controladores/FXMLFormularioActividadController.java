@@ -41,8 +41,9 @@ public class FXMLFormularioActividadController implements Initializable {
     private String tipoBoton;
     private int idEstudiante;
     private int idCurso;
+    private boolean inicioConExito;
     String EXPRESION_CARACTERES_ESPECIALES = "[`~!@#$%^&*+=|{}°':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}‘；：”“’。，、]";
-     
+
     POJActividad actividadInformacion = new POJActividad();
 
     @Override
@@ -51,26 +52,31 @@ public class FXMLFormularioActividadController implements Initializable {
         txAreaDescripcion.setWrapText(true);
     }
 
-    public void inicializarInformacionFormulario(String tipoClicBoton, POJActividad actividadEdicion, int idEstudiante, int idCurso) {
-        
-        actividadInformacion = actividadEdicion;
-        tipoBoton = tipoClicBoton;
-
-        switch (tipoClicBoton) {
-            case "Modificar":
-                lbTitulo.setText("Modificar actividad");
-                asignarInformacionCampos(actividadInformacion);
-                dpFechaCreacion.setEditable(false);
-                break;
-            case "Registrar":
-                lbTitulo.setText("Registrar actividad");
-                dpFechaCreacion.setEditable(false);
-                dpFechaCreacion.setValue(LocalDate.now());
-                this.idEstudiante = idEstudiante;
-                this.idCurso = idCurso;
-                break;
-        }
+    public boolean isInicioConExito() {
+        return inicioConExito;
     }
+
+    public void inicializarInformacionFormulario(String tipoClicBoton, POJActividad actividadEdicion, int idEstudiante, int idCurso) throws SQLException {
+    inicioConExito = false;
+    actividadInformacion = actividadEdicion;
+    tipoBoton = tipoClicBoton;
+    switch (tipoClicBoton) {
+        case "Modificar":
+            lbTitulo.setText("Modificar actividad");
+            asignarInformacionCampos(actividadInformacion);
+            dpFechaCreacion.setEditable(false);
+            break;
+        case "Registrar":
+            lbTitulo.setText("Registrar actividad");
+            dpFechaCreacion.setEditable(false);
+            dpFechaCreacion.setValue(LocalDate.now());
+            this.idEstudiante = idEstudiante;
+            this.idCurso = idCurso;
+            break;
+    }
+    inicioConExito = true;
+}
+
 
     public void desactivarCampos() {
         txfNombre.setEditable(false);
@@ -95,24 +101,24 @@ public class FXMLFormularioActividadController implements Initializable {
                 if ((validarInformacion(actividadAModificar))) {
                     actividadAModificar.setIdActividad(actividadInformacion.getIdActividad());
 
-                int respuestaBD = DAOActividad.modificarActividad(actividadAModificar);
-                switch (respuestaBD) {
-                    case Constantes.ERROR_CONEXION:
-                        Utilidades.mostrarDialogoSimple("Error de conexión",
-                                "Por el momento no hay conexión, intentelo más tarde",
-                                Alert.AlertType.ERROR);
-                        break;
-                    case Constantes.ERROR_CONSULTA:
-                        Utilidades.mostrarDialogoSimple("Error en la solicitud",
-                                "Por el momento no se puede procesar la solicitud",
-                                Alert.AlertType.ERROR);
-                        break;
-                    case Constantes.OPERACION_EXITOSA:
-                        Utilidades.mostrarDialogoSimple("Información modificada correctamente", "La actividad se ha modificado correctamente",
-                                Alert.AlertType.INFORMATION);
-                        Stage escenarioActual = (Stage) lbTitulo.getScene().getWindow();
-                        escenarioActual.close();
-                }
+                    int respuestaBD = DAOActividad.modificarActividad(actividadAModificar);
+                    switch (respuestaBD) {
+                        case Constantes.ERROR_CONEXION:
+                            Utilidades.mostrarDialogoSimple("Error de conexión",
+                                    "Por el momento no hay conexión, intentelo más tarde",
+                                    Alert.AlertType.ERROR);
+                            break;
+                        case Constantes.ERROR_CONSULTA:
+                            Utilidades.mostrarDialogoSimple("Error en la solicitud",
+                                    "Por el momento no se puede procesar la solicitud",
+                                    Alert.AlertType.ERROR);
+                            break;
+                        case Constantes.OPERACION_EXITOSA:
+                            Utilidades.mostrarDialogoSimple("Información modificada correctamente", "La actividad se ha modificado correctamente",
+                                    Alert.AlertType.INFORMATION);
+                            Stage escenarioActual = (Stage) lbTitulo.getScene().getWindow();
+                            escenarioActual.close();
+                    }
                 }
             }
         }
@@ -225,28 +231,28 @@ public class FXMLFormularioActividadController implements Initializable {
 
     @FXML
     private void validarCaracteresCampoNombre(KeyEvent event) {
-        if(txfNombre.getText().length() >= 135){
+        if (txfNombre.getText().length() >= 135) {
             event.consume();
         }
         String textoIngresado = event.getCharacter();
-        if (textoIngresado.matches(EXPRESION_CARACTERES_ESPECIALES)){
-            Utilidades.mostrarDialogoSimple("Caracteres no permitidos", 
+        if (textoIngresado.matches(EXPRESION_CARACTERES_ESPECIALES)) {
+            Utilidades.mostrarDialogoSimple("Caracteres no permitidos",
                     "Pof favor no ingrese números ni caracteres especiales "
-                            + "en este campo", Alert.AlertType.WARNING);
+                    + "en este campo", Alert.AlertType.WARNING);
             event.consume();
         }
     }
 
     @FXML
     private void validarCaracteresCampoDescripcion(KeyEvent event) {
-        if(txAreaDescripcion.getText().length() >= 600){
+        if (txAreaDescripcion.getText().length() >= 600) {
             event.consume();
         }
         String textoIngresado = event.getCharacter();
-        if (textoIngresado.matches(EXPRESION_CARACTERES_ESPECIALES)){
-            Utilidades.mostrarDialogoSimple("Caracteres no permitidos", 
+        if (textoIngresado.matches(EXPRESION_CARACTERES_ESPECIALES)) {
+            Utilidades.mostrarDialogoSimple("Caracteres no permitidos",
                     "Pof favor no ingrese números ni caracteres especiales "
-                            + "en este campo", Alert.AlertType.WARNING);
+                    + "en este campo", Alert.AlertType.WARNING);
             event.consume();
         }
     }

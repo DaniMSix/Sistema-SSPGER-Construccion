@@ -2,6 +2,7 @@ package sistema.spger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -40,31 +40,31 @@ public class FXMLPantallaPrincipalController implements Initializable {
 
     @FXML
     private MenuBar menuBOpciones;
-    
+
     POJUsuario usuarioLogueado = null;
     @FXML
     private AnchorPane anchoPnPrincipal;
-    
+
     private POJUsuario usuarioActual;
-    
+
     private POJRolRespuesta respuestaBD;
     @FXML
     private Button btnProyectoGuiado;
     @FXML
     private Button btnExperienciaRecepcional;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       desactivarItems();
-    }   
-    
-    public void mostrarRoles(POJRolRespuesta respuestaBD){
-        
+        desactivarItems();
+    }
+
+    public void mostrarRoles(POJRolRespuesta respuestaBD) {
+
         ArrayList<POJRol> listaRoles = respuestaBD.getListaRoles();
-        
-        for (int indice=0; indice<listaRoles.size(); indice++){
+
+        for (int indice = 0; indice < listaRoles.size(); indice++) {
             String opcionRol = listaRoles.get(indice).getDescripcion();
-            switch(opcionRol){
+            switch (opcionRol) {
                 case "Administrador":
                     mItemAdministrador.setVisible(true);
                     break;
@@ -81,22 +81,22 @@ public class FXMLPantallaPrincipalController implements Initializable {
                     btnProyectoGuiado.setVisible(true);
                     btnExperienciaRecepcional.setVisible(true);
             }
-        } 
+        }
     }
-    
-    public void prepararRolesUsuario(POJRolRespuesta respuestaBD, POJUsuario usuarioLogueado){
+
+    public void prepararRolesUsuario(POJRolRespuesta respuestaBD, POJUsuario usuarioLogueado) {
         usuarioActual = usuarioLogueado;
         mostrarRoles(respuestaBD);
     }
-    
-    public void desactivarItems(){
+
+    public void desactivarItems() {
         mItemAdministrador.setVisible(false);
         mItemProfesor.setVisible(false);
         mItemProfesor.setVisible(false);
         mItemDirector.setVisible(false);
         mItemResponsableCA.setVisible(false);
     }
-    
+
     @FXML
     private void clicMItemAdministrador(ActionEvent event) throws IOException {
         try {
@@ -116,26 +116,24 @@ public class FXMLPantallaPrincipalController implements Initializable {
                     + "intentélo más tarde", Alert.AlertType.ERROR);
         }
     }
-        
+
     @FXML
-    private void clicMItemDirector(ActionEvent event) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLPantallaDirector.fxml"));
-            Parent vista = loader.load();
-            FXMLPantallaDirectorController pantallaDirector = loader.getController();
-            //pantallaDirector.prepararRolesUsuario(usuarioActivo);
-            Scene escena = new Scene(vista);
-            Stage escenarioBase = new Stage();
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
-            escenarioBase.setAlwaysOnTop(true);
-            escenarioBase.setScene(escena);
-            escenarioBase.setTitle("Home");
-            escenarioBase.showAndWait();
-        } catch (IOException ex) {
-            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
-                    + "intentélo más tarde", Alert.AlertType.ERROR);
-        }
-    }
+    private void clicMItemDirector(ActionEvent event) throws SQLException {
+    try {
+        FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLPantallaDirector.fxml"));
+        Parent vista = loader.load();
+        FXMLPantallaDirectorController pantallaDirector = loader.getController();
+        pantallaDirector.prepararRolesUsuario(usuarioActual);
+        Scene escena = new Scene(vista);
+        Stage escenarioBase = new Stage();
+        escenarioBase.initModality(Modality.APPLICATION_MODAL);
+        escenarioBase.setScene(escena);
+        escenarioBase.setTitle("SSPGER Director");
+        escenarioBase.showAndWait();
+    } catch (IOException ex) {
+        Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, intentélo más tarde", Alert.AlertType.ERROR);
+   }
+}
 
     @FXML
     private void clicMItemResponsableCA(ActionEvent event) {
@@ -149,7 +147,7 @@ public class FXMLPantallaPrincipalController implements Initializable {
             escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.setAlwaysOnTop(true);
             escenarioBase.setScene(escena);
-            escenarioBase.setTitle("Home");
+            escenarioBase.setTitle("SSPGER Responsable CA");
             escenarioBase.showAndWait();
         } catch (IOException ex) {
             Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
@@ -157,14 +155,13 @@ public class FXMLPantallaPrincipalController implements Initializable {
         }
     }
 
-
     @FXML
     private void clicMItemProfesor(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLPantallaProfesor.fxml"));
             Parent vista = loader.load();
             FXMLPantallaProfesorController pantallaProfesor = loader.getController();
-            //pantallaProfesor.prepararRolesUsuario(idUsuarioActual);
+            pantallaProfesor.prepararRolesUsuario(usuarioActual.getIdUsuario());
             Scene escena = new Scene(vista);
             Stage escenarioBase = new Stage();
             escenarioBase.initModality(Modality.APPLICATION_MODAL);
@@ -190,32 +187,37 @@ public class FXMLPantallaPrincipalController implements Initializable {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLCurso.fxml"));
             Parent vista = loader.load();
             FXMLCursoController pantallaProyectoGuiado = loader.getController();
-            //pantallaResponsableCA.prepararRolesUsuario(idUsuarioActual);
+            pantallaProyectoGuiado.inicializarInformacion(usuarioActual.getIdUsuario(), "Proyecto Guiado");
             Scene escena = new Scene(vista);
             Stage escenarioBase = new Stage();
             escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.setScene(escena);
             escenarioBase.setTitle("SSPGER Proyecto Guiado");
-            escenarioBase.showAndWait();
+            
+            if (pantallaProyectoGuiado.isInicioConExito()) {
+                escenarioBase.showAndWait();
+            }
         } catch (IOException ex) {
-            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
-                    + "intentélo más tarde", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, intentélo más tarde", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    private void clicBotonExperienciaRecepcional(ActionEvent event) {
+    private void clicBotonExperienciaRecepcional(ActionEvent event) throws SQLException {
         try {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLCurso.fxml"));
             Parent vista = loader.load();
-            FXMLCursoController pantallaExperienciaRecepcional= loader.getController();
-            //pantallaResponsableCA.prepararRolesUsuario(idUsuarioActual);
+            FXMLCursoController pantallaExperienciaRecepcional = loader.getController();
+            pantallaExperienciaRecepcional.inicializarInformacion(usuarioActual.getIdUsuario(), "Experiencia Recepcional");
             Scene escena = new Scene(vista);
             Stage escenarioBase = new Stage();
             escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.setScene(escena);
-            escenarioBase.setTitle("SSPGER Proyecto Guiado");
-            escenarioBase.showAndWait();
+            escenarioBase.setTitle("SSPGER Experiencia recepcional");
+            
+            if (pantallaExperienciaRecepcional.isInicioConExito()) {
+                escenarioBase.showAndWait();
+            }
         } catch (IOException ex) {
             Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
                     + "intentélo más tarde", Alert.AlertType.ERROR);
@@ -223,9 +225,7 @@ public class FXMLPantallaPrincipalController implements Initializable {
     }
 }
 
-    
 // <a href="https://storyset.com/online">Online illustrations by Storyset</a>
-
 //mouse clic
 //stage escenario
 //secene es lo que esta adentro

@@ -105,8 +105,6 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-   
-    
     public void mostrarPantallaPrincipal(POJRolRespuesta respuestaBD, POJUsuario usuarioVerificado) {
        
         Stage escenarioBase = (Stage) tfCorreo.getScene().getWindow();

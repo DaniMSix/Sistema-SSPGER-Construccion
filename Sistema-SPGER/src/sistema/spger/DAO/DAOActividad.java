@@ -48,6 +48,9 @@ public class DAOActividad {
     }
 
     public static POJActividadRespuesta obtenerActividadesProgramadas(int idEstudiante, int idCurso) throws SQLException {
+        System.out.println("DAO");
+        System.out.println("idEstudiante" + idEstudiante);
+        System.out.println("idCurso" + idCurso);
         POJActividadRespuesta respuesta = new POJActividadRespuesta();
         ArrayList<POJActividad> actividadConsulta = new ArrayList();
         ModConexionBD abrirConexion = new ModConexionBD();
@@ -63,7 +66,6 @@ public class DAOActividad {
                 prepararSentencia.setInt(1, idEstudiante);
                 prepararSentencia.setInt(2, idCurso);
                 ResultSet resultado = prepararSentencia.executeQuery();
-                int filasInsertadas = 0;
                 while(resultado.next()){
                     POJActividad actividad = new POJActividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
@@ -73,11 +75,9 @@ public class DAOActividad {
                     actividad.setFechaLimiteEntrega(resultado.getString("fechaLimiteEntrega"));
                     actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
                     actividadConsulta.add(actividad);
-                    filasInsertadas++;
                 }
-                if(filasInsertadas>0){
                     respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-                }
+                
                 respuesta.setActividades(actividadConsulta);
             } catch (SQLException e) {
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);

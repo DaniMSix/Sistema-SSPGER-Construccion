@@ -14,7 +14,7 @@
             <Image url="@../utils/imagenes/Fondo-General.png" />
          </image>
       </ImageView>
-      <Button layoutX="179.0" layoutY="94.0" mnemonicParsing="false" style="-fx-background-color: B0DAFF;" text="Consultar actividades programadas" />
-      <Button layoutX="237.0" layoutY="165.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: FEFF86;" text="Consultar entregas" />
+      <Button fx:id="btnConsultarActividades" layoutX="179.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicBotonConsultarActividades" style="-fx-background-color: B0DAFF;" text="Consultar actividades programadas" />
+      <Button layoutX="237.0" layoutY="165.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clicBotonConsultarEntregas" style="-fx-background-color: FEFF86;" text="Consultar entregas" />
    </children>
 </AnchorPane>

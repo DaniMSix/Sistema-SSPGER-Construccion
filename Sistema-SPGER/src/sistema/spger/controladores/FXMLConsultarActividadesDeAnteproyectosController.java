@@ -39,13 +39,14 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
     private TableColumn tcFechaLimiteEntrega;
     @FXML
     private TableColumn tcEstado;
-    int idUsuario=5;
+    int idUsuario;
     
     private ObservableList<POJActividad> actividades;
     @FXML
     private Button bttEvaluar;
     @FXML
     private TextField tfBusqueda;
+    private boolean inicioConExito;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,9 +54,20 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
     }    
     
     public void inicializarInformacion(int idUsuarioActividad) throws SQLException{
+        inicioConExito = false; 
         idUsuario = idUsuarioActividad;
-        configurarTablaUsuarios();
-        cargarInformacionTabla();
+        try {
+            configurarTablaUsuarios();
+            cargarInformacionTabla();
+            inicioConExito = true;
+        }catch(SQLException e){
+            Utilidades.mostrarDialogoSimple("Error", "Error, inténtelo más tarde", Alert.AlertType.ERROR);
+        }
+        
+    }
+    
+    public boolean isInicioConExito() {
+        return inicioConExito;
     }
     
     public void configurarTablaUsuarios(){
@@ -98,25 +110,29 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
         }
     }
     
-    private void irFormulario(String tipoBoton, POJActividad actividadInformacion, int idEstudiante, int idCurso){
-
-        try {
-            FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLFormularioActividad.fxml"));
-            Parent vista = loader.load();
-            FXMLFormularioActividadController formularioActividad = loader.getController();
-            formularioActividad.inicializarInformacionFormulario(tipoBoton, actividadInformacion, idEstudiante, idCurso);
-            Scene escena = new Scene(vista);
-            Stage escenarioBase = new Stage();
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
-            escenarioBase.setScene(escena);
+    private void irFormulario(String tipoBoton, POJActividad actividadInformacion, int idEstudiante, int idCurso) {
+    try {
+        FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLFormularioActividad.fxml"));
+        Parent vista = loader.load();
+        FXMLFormularioActividadController formularioActividad = loader.getController();
+        formularioActividad.inicializarInformacionFormulario(tipoBoton, actividadInformacion, idEstudiante, idCurso);
+        Scene escena = new Scene(vista);
+        Stage escenarioBase = new Stage();
+        escenarioBase.initModality(Modality.APPLICATION_MODAL);
+        escenarioBase.setScene(escena);
+        if (formularioActividad.isInicioConExito()) {
             escenarioBase.showAndWait();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLFormularioActividadController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    } catch (IOException ex) {
+        Logger.getLogger(FXMLFormularioActividadController.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Utilidades.mostrarDialogoSimple("Error", "Error, inténtelo más tarde", Alert.AlertType.ERROR);
+        Logger.getLogger(FXMLFormularioActividadController.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
     
-    private void irFormularioEvaluar(int idActividad){
+    private void irFormularioEvaluar(int idActividad) throws SQLException{
 
         try {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLEvaluarEntrega.fxml"));
@@ -135,7 +151,7 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
     }
 
     @FXML
-    private void clicBotonEvaluar(MouseEvent event) {
+    private void clicBotonEvaluar(MouseEvent event) throws SQLException {
         int idActividad = tvActividadesAnteproyectos.getSelectionModel().getSelectedItem().getIdActividad();
         irFormularioEvaluar(idActividad);
     }

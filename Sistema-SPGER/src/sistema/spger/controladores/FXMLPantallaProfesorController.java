@@ -6,10 +6,8 @@
 package sistema.spger.controladores;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import sistema.spger.modelo.POJO.POJUsuario;
 
 /**
  * FXML Controller class

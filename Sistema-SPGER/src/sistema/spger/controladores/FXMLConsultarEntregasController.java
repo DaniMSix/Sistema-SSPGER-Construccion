@@ -2,6 +2,7 @@ package sistema.spger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,8 +47,8 @@ public class FXMLConsultarEntregasController implements Initializable {
     @FXML
     private TableColumn tcCalificacion;
     private ObservableList<POJActividadEntrega> actividadesEntregas;
-    private int idEstudiante = 5;
-    private int idCurso = 1;
+    private int idEstudiante;
+    private int idCurso;
     List<POJActividadEntrega> listaIdActividades = new ArrayList();
     @FXML
     private TextField tfBusqueda;
@@ -58,23 +59,25 @@ public class FXMLConsultarEntregasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configurarTablaActividadesEntregas();
-        cargarInformacionTabla();
+        
         habilitarBotonEntrega();
         habilitarBotonModificar();
         
     }    
     
-    public void inicializarInformacion(){
-        //TODOOOOOOOOOOOOOOOO
+    public void inicializarInformacion(int idEstudianteLogueado, int idCursoEstudiante) throws SQLException {
+        idEstudiante = idEstudianteLogueado;
+        idCurso = idCursoEstudiante;
+        configurarTablaActividadesEntregas();
+        cargarInformacionTabla();
     }
     
     public void habilitarBotonModificar(){
         tvEntregas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null && newValue.getEstado().equals("Entregada")) {
-            btnModificar.setDisable(false); // Habilitar el botón "Entregar"
+            btnModificar.setDisable(false);
         } else {
-            btnModificar.setDisable(true); // Deshabilitar el botón "Entregar"
+            btnModificar.setDisable(true);
         }
     });
     }
@@ -82,9 +85,9 @@ public class FXMLConsultarEntregasController implements Initializable {
     public void habilitarBotonEntrega(){
         tvEntregas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue != null && newValue.getEstado().equals("Sin entregar")) {
-            btnEntregar.setDisable(false); // Habilitar el botón "Entregar"
+            btnEntregar.setDisable(false);
         } else {
-            btnEntregar.setDisable(true); // Deshabilitar el botón "Entregar"
+            btnEntregar.setDisable(true); 
         }
     });
     }
@@ -96,7 +99,7 @@ public class FXMLConsultarEntregasController implements Initializable {
         tcCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
     }
     
-    public void cargarInformacionTabla() {
+    public void cargarInformacionTabla() throws SQLException {
         actividadesEntregas = FXCollections.observableArrayList();
         POJActividadEntregaRespuesta respuestaBD = DAOActividadEntrega.obtenerEntregaActividades(idEstudiante, idCurso);
         
@@ -116,7 +119,7 @@ public class FXMLConsultarEntregasController implements Initializable {
     }
 
     @FXML
-    private void clicBotonEntregar(ActionEvent event) {
+    private void clicBotonEntregar(ActionEvent event) throws SQLException {
         POJActividadEntrega actividadSeleccionada = tvEntregas.getSelectionModel().getSelectedItem();
         if(actividadSeleccionada != null){
             irFormulario("Registrar", actividadSeleccionada);
@@ -131,7 +134,7 @@ public class FXMLConsultarEntregasController implements Initializable {
     }
 
     @FXML
-    private void clicBotonModificar(ActionEvent event) {
+    private void clicBotonModificar(ActionEvent event) throws SQLException {
         POJActividadEntrega actividadSeleccionada = tvEntregas.getSelectionModel().getSelectedItem();
         if(actividadSeleccionada != null){
             System.out.println("actividadSeleccionada.getComentariosAlumno()" + actividadSeleccionada.getComentariosAlumno());
@@ -145,8 +148,7 @@ public class FXMLConsultarEntregasController implements Initializable {
     }
 
     
-    private void irFormulario(String tipoBoton, POJActividadEntrega actividadInformacion){
-
+    private void irFormulario(String tipoBoton, POJActividadEntrega actividadInformacion) throws SQLException{
         try {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLFormularioEntrega.fxml"));
             Parent vista = loader.load();
@@ -160,7 +162,6 @@ public class FXMLConsultarEntregasController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLFormularioActividadController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void configurarBusquedaTabla() {
