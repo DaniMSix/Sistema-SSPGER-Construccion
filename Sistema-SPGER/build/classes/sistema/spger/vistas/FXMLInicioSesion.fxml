@@ -26,7 +26,7 @@
             <Label layoutX="59.0" layoutY="197.0" text="Contraseña" />
             <TextField fx:id="tfCorreo" layoutX="62.0" layoutY="142.0" />
             <Label layoutX="59.0" layoutY="102.0" text="Correo" />
-            <Button layoutX="110.0" layoutY="300.0" mnemonicParsing="false" onAction="#clicIniciarSesion" style="-fx-background-color: #8BCDF1;" text="Iniciar sesión">
+            <Button layoutX="100.0" layoutY="303.0" mnemonicParsing="false" onAction="#clicIniciarSesion" prefHeight="45.0" prefWidth="146.0" style="-fx-background-color: #8BCDF1;" text="Iniciar sesión">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

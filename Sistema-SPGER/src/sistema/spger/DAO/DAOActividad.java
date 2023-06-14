@@ -12,7 +12,12 @@ import sistema.spger.utils.Constantes;
 
 public class DAOActividad {
 
-    public static int registrarActividad(POJActividad actividadARegistrar) {
+    public static int registrarActividad(POJActividad actividadARegistrar) throws SQLException {
+        System.out.println("nombre"+actividadARegistrar.getNombre());
+        System.out.println("descripción"+actividadARegistrar.getDescripcion());
+        System.out.println("fechaCreación"+actividadARegistrar.getFechaCreacion());
+        System.out.println("fechaLimiteEntrega"+actividadARegistrar.getFechaLimiteEntrega());
+        System.out.println("estado"+actividadARegistrar.getEstado());
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;
@@ -42,13 +47,11 @@ public class DAOActividad {
 
     }
 
-    public static POJActividadRespuesta obtenerActividadesProgramadas(int idEstudiante, int idCurso) {
+    public static POJActividadRespuesta obtenerActividadesProgramadas(int idEstudiante, int idCurso) throws SQLException {
         POJActividadRespuesta respuesta = new POJActividadRespuesta();
         ArrayList<POJActividad> actividadConsulta = new ArrayList();
-
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
-
         if (conexion != null) {
             try {
                 String consulta = "SELECT ca.idActividad, a.nombre, a.descripcion, a.estado, a.fechaLimiteEntrega, a.fechaCreacion " +
@@ -60,7 +63,7 @@ public class DAOActividad {
                 prepararSentencia.setInt(1, idEstudiante);
                 prepararSentencia.setInt(2, idCurso);
                 ResultSet resultado = prepararSentencia.executeQuery();
-                respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                int filasInsertadas = 0;
                 while(resultado.next()){
                     POJActividad actividad = new POJActividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
@@ -70,6 +73,10 @@ public class DAOActividad {
                     actividad.setFechaLimiteEntrega(resultado.getString("fechaLimiteEntrega"));
                     actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
                     actividadConsulta.add(actividad);
+                    filasInsertadas++;
+                }
+                if(filasInsertadas>0){
+                    respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 }
                 respuesta.setActividades(actividadConsulta);
             } catch (SQLException e) {
@@ -83,7 +90,7 @@ public class DAOActividad {
 
     
 
-    public static int modificarActividad(POJActividad actividadModificar) {
+    public static int modificarActividad(POJActividad actividadModificar) throws SQLException {
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;
@@ -107,7 +114,7 @@ public class DAOActividad {
         return codigoRespuesta;
     }
 
-    public static POJActividad obtenerIdActividad(POJActividad actividadRegistrada) {
+    public static POJActividad obtenerIdActividad(POJActividad actividadRegistrada) throws SQLException {
         POJActividad respuestaBD = new POJActividad();
 
         ModConexionBD abrirConexion = new ModConexionBD();
@@ -135,7 +142,7 @@ public class DAOActividad {
         return respuestaBD;
     }
     
-    public static int registrarCursoActividad(int idCurso, int idActividad) {
+    public static int registrarCursoActividad(int idCurso, int idActividad) throws SQLException {
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;
@@ -158,7 +165,7 @@ public class DAOActividad {
 
     }
     
-    public static int registrarUsuarioActividad(int idUsuario, int idActividad) {
+    public static int registrarUsuarioActividad(int idUsuario, int idActividad) throws SQLException {
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;
@@ -181,7 +188,7 @@ public class DAOActividad {
 
     }
     
-    public static POJActividadRespuesta obtenerActividadesPorUsuario(int idUsuario){
+    public static POJActividadRespuesta obtenerActividadesPorUsuario(int idUsuario) throws SQLException{
         POJActividadRespuesta respuestaBD = new POJActividadRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();

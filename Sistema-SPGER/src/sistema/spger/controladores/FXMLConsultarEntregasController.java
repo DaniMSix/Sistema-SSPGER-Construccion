@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,16 +51,42 @@ public class FXMLConsultarEntregasController implements Initializable {
     List<POJActividadEntrega> listaIdActividades = new ArrayList();
     @FXML
     private TextField tfBusqueda;
+    @FXML
+    private Button btnEntregar;
+    @FXML
+    private Button btnModificar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaActividadesEntregas();
         cargarInformacionTabla();
+        habilitarBotonEntrega();
+        habilitarBotonModificar();
         
     }    
     
     public void inicializarInformacion(){
         //TODOOOOOOOOOOOOOOOO
+    }
+    
+    public void habilitarBotonModificar(){
+        tvEntregas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue != null && newValue.getEstado().equals("Entregada")) {
+            btnModificar.setDisable(false); // Habilitar el botón "Entregar"
+        } else {
+            btnModificar.setDisable(true); // Deshabilitar el botón "Entregar"
+        }
+    });
+    }
+    
+    public void habilitarBotonEntrega(){
+        tvEntregas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue != null && newValue.getEstado().equals("Sin entregar")) {
+            btnEntregar.setDisable(false); // Habilitar el botón "Entregar"
+        } else {
+            btnEntregar.setDisable(true); // Deshabilitar el botón "Entregar"
+        }
+    });
     }
     
     public void configurarTablaActividadesEntregas(){
@@ -106,11 +133,9 @@ public class FXMLConsultarEntregasController implements Initializable {
     @FXML
     private void clicBotonModificar(ActionEvent event) {
         POJActividadEntrega actividadSeleccionada = tvEntregas.getSelectionModel().getSelectedItem();
-        
         if(actividadSeleccionada != null){
-            System.out.println("actividadSeleccionada.getComentariosAlumno();" + actividadSeleccionada.getComentariosAlumno());
+            System.out.println("actividadSeleccionada.getComentariosAlumno()" + actividadSeleccionada.getComentariosAlumno());
             irFormulario("Modificar", actividadSeleccionada);
-            
         }else{
             Utilidades.mostrarDialogoSimple("Atención", "Selecciona el registro "
                     + "en la tabla para poder editarlo", Alert.AlertType.WARNING);
@@ -119,9 +144,6 @@ public class FXMLConsultarEntregasController implements Initializable {
         tvEntregas.refresh();
     }
 
-    @FXML
-    private void clicBotonEliminar(ActionEvent event) {
-    }
     
     private void irFormulario(String tipoBoton, POJActividadEntrega actividadInformacion){
 

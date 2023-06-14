@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import sistema.spger.modelo.ModConexionBD;
-import sistema.spger.modelo.POJO.POJCurso;
-import sistema.spger.modelo.POJO.POJCursoRespuesta;
 import sistema.spger.modelo.POJO.POJLgac;
 import sistema.spger.modelo.POJO.POJLgacRespuesta;
 import sistema.spger.utils.Constantes;
@@ -14,7 +12,7 @@ import sistema.spger.utils.Constantes;
 
 public class DAOLgac {
     
-    public static POJLgacRespuesta comprobarInformacionDuplicada(POJLgac lgacARegistrar){
+    public static POJLgacRespuesta comprobarInformacionDuplicada(POJLgac lgacARegistrar) throws SQLException{
         POJLgacRespuesta lgacConsulta = new POJLgacRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -43,7 +41,7 @@ public class DAOLgac {
         return lgacConsulta;
     }
 
-    public static int registrarLgac(POJLgac lgacARegistrar) {
+    public static int registrarLgac(POJLgac lgacARegistrar) throws SQLException {
         int respuesta;
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();

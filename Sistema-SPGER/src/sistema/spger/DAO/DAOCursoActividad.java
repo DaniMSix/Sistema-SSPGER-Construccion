@@ -13,7 +13,7 @@ import sistema.spger.utils.Constantes;
 
 public class DAOCursoActividad {
     
-    public static POJCursoActividadRespuesta obtenerListaDeIdDeActividades(int idCurso){
+    public static POJCursoActividadRespuesta obtenerListaDeIdDeActividades(int idCurso) throws SQLException{
         POJCursoActividadRespuesta respuestaBD = new POJCursoActividadRespuesta();
         ArrayList<POJCursoActividad> actividadConsulta = new ArrayList();
         

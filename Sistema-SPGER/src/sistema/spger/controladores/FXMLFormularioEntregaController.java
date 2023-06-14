@@ -66,11 +66,8 @@ public class FXMLFormularioEntregaController implements Initializable {
                 txAreaDescripcion.setText(actividadInformacion.getDescripcion());
                 txAreaDescripcion.setEditable(false);
                 asignarCamposInformacion(idEntrega);
-                
-                //dpFechaCreacion.setEditable(false);
                 break;
             case "Registrar":
-                System.err.println("IdActividad " + actividadInformacion.getIdActividad());
                 lbTitulo.setText("Entregar actividad");
                 lbNombreActividad.setText(actividadInformacion.getNombre());
                 txAreaDescripcion.setText(actividadInformacion.getDescripcion());
@@ -79,9 +76,6 @@ public class FXMLFormularioEntregaController implements Initializable {
        }
     }
 
-    @FXML
-    private void clicBotonEliminar(ActionEvent event) {
-    }
 
     @FXML
     private void clicBotonAgregar(ActionEvent event) throws IOException {
@@ -103,25 +97,21 @@ public class FXMLFormularioEntregaController implements Initializable {
                 listViewArchivos.getItems().add(file.getName());
             }
 
-            if (selectedFiles.size() > TAMANIO_MAXIMO) {
-                System.err.println("Tamaño excedido");
+            if (selectedFiles.size() > TAMANIO_MAXIMO) { 
                 lbTamanioMaximo.setText("Ha sobrepasado el tamaño permitido");
             } else {
             }
         }
-
     }
 
     private POJArchivosRespuesta asignarIdEntregaAArchivos(int entregaId) {
         List<POJArchivos> archivos = archivosAGuardar.getArchivosEntrega();
         for (POJArchivos archivo : archivos) {
             archivo.setEntrega_idEntrega(entregaId);
-            System.out.println("id asignar" + archivo.getEntrega_idEntrega());
         }
         return archivosAGuardar;
     }
 
-    
     public POJEntrega obtenerInformacionIngresada(){
         POJEntrega informacionEntrega= new POJEntrega();
         String comentariosAlumno = txAreaComentariosAlumno.getText();
@@ -141,48 +131,164 @@ public class FXMLFormularioEntregaController implements Initializable {
         }
     }
     
+    public boolean validarInformacion(POJEntrega actividadInformacionIngresada) {
+
+        boolean datosValidos = true;
+
+        if ((actividadInformacionIngresada.getComentariosAlumno().isEmpty())) {
+            datosValidos = false;
+            Utilidades.mostrarDialogoSimple("Campo vacío", "Por favor llene el campo de comentarios", Alert.AlertType.ERROR);
+        }
+
+        if (datosValidos) {
+            datosValidos = true;
+        }
+
+        return datosValidos;
+    }
+    
+     public boolean comprobarCodigoRespuesta(int codigoRespuesta) {
+        boolean esExitosa = false;
+        switch (codigoRespuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexión",
+                        "Por el momento no hay conexión, intentelo más tarde",
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la solicitud",
+                        "Por el momento no se puede procesar la solicitud",
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                esExitosa = true;
+        }
+        return esExitosa;
+    }
+    
     @FXML
     private void clicBotonGuardar(ActionEvent event) {
-        
-        POJEntrega entregaInformacion = new POJEntrega();
-        entregaInformacion = obtenerInformacionIngresada();
-        entregaInformacion.setFechaEntrega(LocalDate.now().toString());
-        entregaInformacion.setActividad_idActividad(idActividad);
-        // REGISTRAR ENTREGA
-        int respuestaRegistroEntrega = DAOEntrega.registrarEntrega(entregaInformacion);
-        
-        // OBTENER ID DE LA ENTREGA
-        POJEntrega respuestaBDIdEntrega = DAOEntrega.obtenerIdEntrega(entregaInformacion);
-        
-        // REGISTRAR ARCHIVOS 
-        archivosAGuardar = asignarIdEntregaAArchivos(respuestaBDIdEntrega.getIdEntrega());
-        int codigoRespuesta = DAOEntrega.registrarArchivosEntrega(archivosAGuardar);
-        
-        // ACTUALIZAR ESTADO
-        int respuestaActualizacionEstado = DAOEntrega.actualizarEstadoActividad("Entregada", idActividad);
+        if (tipoBoton.equals("Registrar")) {
+            POJEntrega entregaInformacion = new POJEntrega();
 
-                switch (respuestaRegistroEntrega) {
-                    case Constantes.ERROR_CONEXION:
-                        Utilidades.mostrarDialogoSimple("Error de conexión",
-                                "Por el momento no hay conexión, inténtelo más tarde",
-                                Alert.AlertType.ERROR);
-                        break;
-                    case Constantes.ERROR_CONSULTA:
-                        Utilidades.mostrarDialogoSimple("Error en la solicitud",
-                                "Por el momento no se puede procesar la solicitud",
-                                Alert.AlertType.ERROR);
-                        break;
-                    case Constantes.OPERACION_EXITOSA:
-                        Utilidades.mostrarDialogoSimple("Información modificada correctamente",
-                                "El usuario se ha modificado correctamente",
-                                Alert.AlertType.INFORMATION);
-                        break;
+            if (archivosAGuardar.getArchivosEntrega() != null) {
+                entregaInformacion = obtenerInformacionIngresada();
+                if ((validarInformacion(entregaInformacion))) {
+                    entregaInformacion.setFechaEntrega(LocalDate.now().toString());
+                    entregaInformacion.setActividad_idActividad(idActividad);
+                    int respuestaRegistroEntrega = DAOEntrega.registrarEntrega(entregaInformacion);
+                    if ((comprobarCodigoRespuesta(respuestaRegistroEntrega))) {
+                        POJEntrega respuestaBDIdEntrega = DAOEntrega.obtenerIdEntrega(entregaInformacion);
+                        if ((comprobarCodigoRespuesta(respuestaBDIdEntrega.getCodigoRespuesta()))) {
+                            archivosAGuardar = asignarIdEntregaAArchivos(respuestaBDIdEntrega.getIdEntrega());
+                            int respuestaRegistrarArchivos = DAOEntrega.registrarArchivosEntrega(archivosAGuardar);
+                            if ((comprobarCodigoRespuesta(respuestaRegistrarArchivos))) {
+                                int respuestaActualizacionEstado = DAOEntrega.actualizarEstadoActividad("Entregada", idActividad);
+
+                                switch (respuestaActualizacionEstado) {
+                                    case Constantes.ERROR_CONEXION:
+                                        Utilidades.mostrarDialogoSimple("Error de conexión",
+                                                "Por el momento no hay conexión, inténtelo más tarde",
+                                                Alert.AlertType.ERROR);
+                                        break;
+                                    case Constantes.ERROR_CONSULTA:
+                                        Utilidades.mostrarDialogoSimple("Error en la solicitud",
+                                                "Por el momento no se puede procesar la solicitud",
+                                                Alert.AlertType.ERROR);
+                                        break;
+                                    case Constantes.OPERACION_EXITOSA:
+                                        Utilidades.mostrarDialogoSimple("Información registrada correctamente",
+                                                "La entrega se ha registrado correctamente",
+                                                Alert.AlertType.INFORMATION);
+                                        cerrarVentana();
+                                        break;
+                                }
+                            }
+                        }
+                    }
                 }
-            
+            } else {
+                Utilidades.mostrarDialogoSimple("Sin archivos", "Seleccione al menos un archivo para la entrega",
+                        Alert.AlertType.WARNING);
+            }
+        }
+        
+        if (tipoBoton.equals("Modificar")) {
+            POJEntrega entregaAModificar = obtenerInformacionIngresada();
+
+            if (archivosAGuardar.getArchivosEntrega() != null) {
+                if (entregaAModificar != null) {
+                    if ((validarInformacion(entregaAModificar))) {
+                        entregaAModificar.setActividad_idActividad(actividadInformacion.getIdActividad());
+                        int respuestaBDActualizarComentarioProfesor = DAOEntrega.actualizarComentarioProfesor(entregaAModificar);
+                        if (comprobarCodigoRespuesta(respuestaBDActualizarComentarioProfesor)) {
+                            POJEntrega respuestaBDIdEntrega = DAOEntrega.obtenerIdEntrega(entregaAModificar);
+                            if ((comprobarCodigoRespuesta(respuestaBDIdEntrega.getCodigoRespuesta()))) {
+                                archivosAGuardar = asignarIdEntregaAArchivos(respuestaBDIdEntrega.getIdEntrega());
+                                int respuestaRegistrarArchivos = DAOEntrega.registrarArchivosEntrega(archivosAGuardar);
+                                if ((comprobarCodigoRespuesta(respuestaRegistrarArchivos))) {
+                                    int respuestaActualizacionEstado = DAOEntrega.actualizarEstadoActividad("Entregada", idActividad);
+
+                                    switch (respuestaActualizacionEstado) {
+                                        case Constantes.ERROR_CONEXION:
+                                            Utilidades.mostrarDialogoSimple("Error de conexión",
+                                                    "Por el momento no hay conexión, inténtelo más tarde",
+                                                    Alert.AlertType.ERROR);
+                                            break;
+                                        case Constantes.ERROR_CONSULTA:
+                                            Utilidades.mostrarDialogoSimple("Error en la solicitud",
+                                                    "Por el momento no se puede procesar la solicitud",
+                                                    Alert.AlertType.ERROR);
+                                            break;
+                                        case Constantes.OPERACION_EXITOSA:
+                                            Utilidades.mostrarDialogoSimple("Información modificada correctamente",
+                                                    "La entrega se ha modificado correctamente",
+                                                    Alert.AlertType.INFORMATION);
+                                            cerrarVentana();
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if ((validarInformacion(entregaAModificar))) {
+                    entregaAModificar.setActividad_idActividad(actividadInformacion.getIdActividad());
+                    System.out.println("Comentario" + entregaAModificar.getComentariosAlumno());
+                    int respuestaBDActualizarComentarioProfesor = DAOEntrega.actualizarComentarioProfesor(entregaAModificar);
+                    switch (respuestaBDActualizarComentarioProfesor) {
+                        case Constantes.ERROR_CONEXION:
+                            Utilidades.mostrarDialogoSimple("Error de conexión",
+                                    "Por el momento no hay conexión, inténtelo más tarde",
+                                    Alert.AlertType.ERROR);
+                            break;
+                        case Constantes.ERROR_CONSULTA:
+                            Utilidades.mostrarDialogoSimple("Error en la solicitud",
+                                    "Por el momento no se puede procesar la solicitud",
+                                    Alert.AlertType.ERROR);
+                            break;
+                        case Constantes.OPERACION_EXITOSA:
+                            Utilidades.mostrarDialogoSimple("Información modificada correctamente",
+                                    "La entrega se ha modificado correctamente",
+                                    Alert.AlertType.INFORMATION);
+                            cerrarVentana();
+                            break;
+                    }
+                }
+            }
+
+        }
+
     }
 
     @FXML
     private void clicBotonCancelar(ActionEvent event) {
+        cerrarVentana();
     }
-
+    
+    private void cerrarVentana() {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.close();
+    }
 }

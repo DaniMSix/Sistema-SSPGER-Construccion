@@ -24,12 +24,12 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Label layoutX="27.0" layoutY="179.0" text="Descripción:">
+      <Label layoutX="22.0" layoutY="185.0" text="Descripción:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <TextField fx:id="txfNombre" layoutX="103.0" layoutY="120.0" prefHeight="39.0" prefWidth="819.0" />
-      <TextArea fx:id="txAreaDescripcion" layoutX="19.0" layoutY="236.0" prefHeight="120.0" prefWidth="898.0" />
+      <TextField fx:id="txfNombre" layoutX="103.0" layoutY="120.0" onKeyTyped="#validarCaracteresCampoNombre" prefHeight="39.0" prefWidth="819.0" />
+      <TextArea fx:id="txAreaDescripcion" layoutX="19.0" layoutY="213.0" onKeyTyped="#validarCaracteresCampoDescripcion" prefHeight="143.0" prefWidth="898.0" />
       <DatePicker fx:id="dpFechaEntrega" layoutX="230.0" layoutY="378.0" />
       <Label layoutX="22.0" layoutY="384.0" text="Fecha límite de entrega:">
          <font>

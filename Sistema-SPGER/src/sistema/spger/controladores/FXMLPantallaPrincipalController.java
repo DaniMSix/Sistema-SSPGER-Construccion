@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -32,9 +33,6 @@ public class FXMLPantallaPrincipalController implements Initializable {
     private MenuItem mItemResponsableCA;
 
     @FXML
-    private MenuItem mItemEstudiante;
-
-    @FXML
     private MenuItem mItemDirector;
 
     @FXML
@@ -46,12 +44,14 @@ public class FXMLPantallaPrincipalController implements Initializable {
     POJUsuario usuarioLogueado = null;
     @FXML
     private AnchorPane anchoPnPrincipal;
-    @FXML
-    private Label lbNombreUsuario;
     
     private POJUsuario usuarioActual;
     
     private POJRolRespuesta respuestaBD;
+    @FXML
+    private Button btnProyectoGuiado;
+    @FXML
+    private Button btnExperienciaRecepcional;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,6 +59,7 @@ public class FXMLPantallaPrincipalController implements Initializable {
     }   
     
     public void mostrarRoles(POJRolRespuesta respuestaBD){
+        
         ArrayList<POJRol> listaRoles = respuestaBD.getListaRoles();
         
         for (int indice=0; indice<listaRoles.size(); indice++){
@@ -77,7 +78,8 @@ public class FXMLPantallaPrincipalController implements Initializable {
                     mItemResponsableCA.setVisible(true);
                     break;
                 case "Estudiante":
-                    mItemEstudiante.setVisible(true);
+                    btnProyectoGuiado.setVisible(true);
+                    btnExperienciaRecepcional.setVisible(true);
             }
         } 
     }
@@ -85,7 +87,6 @@ public class FXMLPantallaPrincipalController implements Initializable {
     public void prepararRolesUsuario(POJRolRespuesta respuestaBD, POJUsuario usuarioLogueado){
         usuarioActual = usuarioLogueado;
         mostrarRoles(respuestaBD);
-        lbNombreUsuario.setText(usuarioLogueado.getNombre());
     }
     
     public void desactivarItems(){
@@ -94,7 +95,6 @@ public class FXMLPantallaPrincipalController implements Initializable {
         mItemProfesor.setVisible(false);
         mItemDirector.setVisible(false);
         mItemResponsableCA.setVisible(false);
-        mItemEstudiante.setVisible(false);
     }
     
     @FXML
@@ -157,25 +157,6 @@ public class FXMLPantallaPrincipalController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicMItemEstudiante(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLPantallaEstudiante.fxml"));
-            Parent vista = loader.load();
-            FXMLPantallaEstudianteController pantallaEstudiante = loader.getController();
-            pantallaEstudiante.prepararRolesUsuario(usuarioActual.getIdUsuario());
-            Scene escena = new Scene(vista);
-            Stage escenarioBase = new Stage();
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
-            escenarioBase.setAlwaysOnTop(true);
-            escenarioBase.setScene(escena);
-            escenarioBase.setTitle("Home");
-            escenarioBase.showAndWait();
-        } catch (IOException ex) {
-            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
-                    + "intentélo más tarde", Alert.AlertType.ERROR);
-        }
-    }
 
     @FXML
     private void clicMItemProfesor(ActionEvent event) throws IOException {
@@ -190,6 +171,50 @@ public class FXMLPantallaPrincipalController implements Initializable {
             escenarioBase.setAlwaysOnTop(true);
             escenarioBase.setScene(escena);
             escenarioBase.setTitle("Home");
+            escenarioBase.showAndWait();
+        } catch (IOException ex) {
+            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
+                    + "intentélo más tarde", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void clicBotonSalir(ActionEvent event) {
+        Stage escenarioActual = (Stage) menuBOpciones.getScene().getWindow();
+        escenarioActual.close();
+    }
+
+    @FXML
+    private void clicBotonProyectoGuiado(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLCurso.fxml"));
+            Parent vista = loader.load();
+            FXMLCursoController pantallaProyectoGuiado = loader.getController();
+            //pantallaResponsableCA.prepararRolesUsuario(idUsuarioActual);
+            Scene escena = new Scene(vista);
+            Stage escenarioBase = new Stage();
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.setScene(escena);
+            escenarioBase.setTitle("SSPGER Proyecto Guiado");
+            escenarioBase.showAndWait();
+        } catch (IOException ex) {
+            Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "
+                    + "intentélo más tarde", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void clicBotonExperienciaRecepcional(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLCurso.fxml"));
+            Parent vista = loader.load();
+            FXMLCursoController pantallaExperienciaRecepcional= loader.getController();
+            //pantallaResponsableCA.prepararRolesUsuario(idUsuarioActual);
+            Scene escena = new Scene(vista);
+            Stage escenarioBase = new Stage();
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.setScene(escena);
+            escenarioBase.setTitle("SSPGER Proyecto Guiado");
             escenarioBase.showAndWait();
         } catch (IOException ex) {
             Utilidades.mostrarDialogoSimple("Error al cargar", "Hubo un error al intentar cargar la ventana, "

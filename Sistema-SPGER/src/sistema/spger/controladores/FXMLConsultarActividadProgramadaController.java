@@ -2,6 +2,7 @@ package sistema.spger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,14 +44,17 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
     POJUsuario estudianteActual;
     private int idEstudiante = 5;
     private int idCurso = 1;
-    private int idAnteproyecto;
     @FXML
     private TextField tfBusqueda;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaUsuarios();
-        cargarInformacionTabla();
+        try {
+            cargarInformacionTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLConsultarActividadProgramadaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void recibirInformacionEstudiante(POJUsuario usuarioLogueado) {
@@ -62,27 +66,29 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
         tcFechaLimiteEntrega.setCellValueFactory(new PropertyValueFactory("fechaLimiteEntrega"));
     }
 
-    public void cargarInformacionTabla() {
-        actividades = FXCollections.observableArrayList();
-        POJActividadRespuesta respuestaBD = DAOActividad.obtenerActividadesProgramadas(idEstudiante, idCurso);
+   public void cargarInformacionTabla() throws SQLException {
+    actividades = FXCollections.observableArrayList();
+    POJActividadRespuesta respuestaBD = DAOActividad.obtenerActividadesProgramadas(idEstudiante, idCurso);
 
-        switch (respuestaBD.getCodigoRespuesta()) {
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Error de conexión", Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error", "Error al cargar los datos", Alert.AlertType.ERROR);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                actividades.addAll(respuestaBD.getActividades());
-                tvActividadesProgramadas.setItems(actividades);
-                configurarBusquedaTabla();
-                break;
-        }
+    switch (respuestaBD.getCodigoRespuesta()) {
+        case Constantes.ERROR_CONEXION:
+            Utilidades.mostrarDialogoSimple("Sin conexión", "Error de conexión", Alert.AlertType.ERROR);
+            break;
+        case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error", "Error al cargar los datos", Alert.AlertType.ERROR);
+            break;
+        case Constantes.OPERACION_EXITOSA:
+            actividades.addAll(respuestaBD.getActividades());
+            tvActividadesProgramadas.setItems(actividades);
+            configurarBusquedaTabla();
+            break;
     }
+}
+
+
 
     @FXML
-    private void clicBotonModificar(ActionEvent event) {
+    private void clicBotonModificar(ActionEvent event) throws SQLException {
         POJActividad actividadSeleccionada = tvActividadesProgramadas.getSelectionModel().getSelectedItem();
         if (actividadSeleccionada != null) {
             irFormulario("Modificar", actividadSeleccionada, 0, 0);
@@ -96,7 +102,7 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
 
     }
 
-    private void irFormulario(String tipoBoton, POJActividad actividadInformacion, int idEstudiante, int idCurso) {
+    private void irFormulario(String tipoBoton, POJActividad actividadInformacion, int idEstudiante, int idCurso) throws SQLException {
 
         try {
             FXMLLoader loader = new FXMLLoader(SistemaSPGER.class.getResource("vistas/FXMLFormularioActividad.fxml"));
@@ -117,7 +123,7 @@ public class FXMLConsultarActividadProgramadaController implements Initializable
     }
 
     @FXML
-    private void clicBotonAgregarTarea(ActionEvent event) {
+    private void clicBotonAgregarTarea(ActionEvent event) throws SQLException {
         irFormulario("Registrar", null, idEstudiante, idCurso);
         
     }

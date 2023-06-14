@@ -2,6 +2,7 @@ package sistema.spger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
     private TableColumn tcFechaLimiteEntrega;
     @FXML
     private TableColumn tcEstado;
-    int idUsuario;
+    int idUsuario=5;
     
     private ObservableList<POJActividad> actividades;
     @FXML
@@ -51,7 +52,7 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
         // TODO
     }    
     
-    public void inicializarInformacion(int idUsuarioActividad){
+    public void inicializarInformacion(int idUsuarioActividad) throws SQLException{
         idUsuario = idUsuarioActividad;
         configurarTablaUsuarios();
         cargarInformacionTabla();
@@ -63,7 +64,7 @@ public class FXMLConsultarActividadesDeAnteproyectosController implements Initia
         tcEstado.setCellValueFactory(new PropertyValueFactory("estado"));
     }
     
-    public void cargarInformacionTabla() {
+    public void cargarInformacionTabla() throws SQLException {
         actividades = FXCollections.observableArrayList();
         POJActividadRespuesta respuestaBD = DAOActividad.obtenerActividadesPorUsuario(idUsuario);
 

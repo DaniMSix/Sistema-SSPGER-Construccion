@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Sistema-SPGER.jar" size="666846" download="eager" />
+    <jar href="Sistema-SPGER.jar" size="910086" download="eager" />
     <jar href="lib\log4j-1.2.17.jar" size="489883" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.47.jar" size="1007502" download="eager" />
   </resources>

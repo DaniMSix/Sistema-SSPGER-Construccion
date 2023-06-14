@@ -12,7 +12,7 @@ import sistema.spger.utils.Constantes;
 
 
 public class DAOProfesor {
-    public static POJUsuarioRespuesta obtenerInformacionProfesores(){
+    public static POJUsuarioRespuesta obtenerInformacionProfesores() throws SQLException{
         POJUsuarioRespuesta respuesta = new POJUsuarioRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexionBD = abrirConexion.getConnection();

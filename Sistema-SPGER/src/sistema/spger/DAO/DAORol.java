@@ -13,7 +13,7 @@ import sistema.spger.utils.Constantes;
 
 public class DAORol {
     
-    public static POJRolRespuesta obtenerRoles(int idUsuario) {
+    public static POJRolRespuesta obtenerRoles(int idUsuario) throws SQLException {
         POJRolRespuesta respuesta = new POJRolRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -45,7 +45,7 @@ public class DAORol {
         return respuesta;
     }
 
-    public static POJRol registrarRolUsuario(POJRol rolARegistrar){
+    public static POJRol registrarRolUsuario(POJRol rolARegistrar) throws SQLException{
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         if (conexion != null){

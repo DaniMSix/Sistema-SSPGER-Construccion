@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import sistema.spger.modelo.ModConexionBD;
 import sistema.spger.modelo.POJO.POJCurso;
 import sistema.spger.modelo.POJO.POJCursoRespuesta;
-import sistema.spger.modelo.POJO.POJUsuario;
-import sistema.spger.modelo.POJO.POJUsuarioRespuesta;
 import sistema.spger.utils.Constantes;
 
 public class DAOCurso {
     
-    public static POJCursoRespuesta comprobarInformacionDuplicada(POJCurso cursoARegistrar){
+    public static POJCursoRespuesta comprobarInformacionDuplicada(POJCurso cursoARegistrar) throws SQLException{
         POJCursoRespuesta cursoRespuesta = new POJCursoRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -44,7 +42,7 @@ public class DAOCurso {
         return cursoRespuesta;
     }
           
-    public static int registrarCurso(POJCurso cursoARegistrar) {
+    public static int registrarCurso(POJCurso cursoARegistrar) throws SQLException {
         int respuesta;
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -79,7 +77,7 @@ public class DAOCurso {
         return respuesta;
     }          
     
-    public static POJCursoRespuesta obtenerCursosDeUsuario(int idUsuario) {
+    public static POJCursoRespuesta obtenerCursosDeUsuario(int idUsuario) throws SQLException {
         POJCursoRespuesta respuesta = new POJCursoRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();

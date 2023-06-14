@@ -18,7 +18,7 @@ import sistema.spger.utils.Constantes;
 
 public class DAOEntrega {
     
-    public static int registrarArchivosEntrega(POJArchivosRespuesta archivosInformacion) {
+    public static int registrarArchivosEntrega(POJArchivosRespuesta archivosInformacion) throws SQLException {
         int codigoRespuesta;
 
         ModConexionBD abrirConexion = new ModConexionBD();
@@ -51,7 +51,7 @@ public class DAOEntrega {
         return codigoRespuesta;
     }
 
-    public static int registrarEntrega(POJEntrega entregaInformacion) {
+    public static int registrarEntrega(POJEntrega entregaInformacion) throws SQLException {
         int codigoRespuesta;
 
         ModConexionBD abrirConexion = new ModConexionBD();
@@ -79,7 +79,7 @@ public class DAOEntrega {
         return codigoRespuesta;
     }
     
-    public static int actualizarEstadoActividad(String estadoActividad, int idActividad) {
+    public static int actualizarEstadoActividad(String estadoActividad, int idActividad) throws SQLException {
         int codigoRespuesta;
 
         ModConexionBD abrirConexion = new ModConexionBD();
@@ -104,8 +104,35 @@ public class DAOEntrega {
 
         return codigoRespuesta;
     }
+    
+    public static int actualizarComentarioProfesor(POJEntrega entregaNuevaInformacion) throws SQLException {
+        int codigoRespuesta;
 
-    public static POJEntrega obtenerIdEntrega(POJEntrega entregaRegistrada){
+        ModConexionBD abrirConexion = new ModConexionBD();
+        Connection conexion = abrirConexion.getConnection();
+
+        if (conexion != null) {
+            try {
+                String consulta = "UPDATE entrega SET comentariosAlumno = ? WHERE Actividad_idActividad = ?";
+                PreparedStatement prepararSentencia = conexion.prepareStatement(consulta);
+
+                    prepararSentencia.setString(1, entregaNuevaInformacion.getComentariosAlumno());
+                    prepararSentencia.setInt(2, entregaNuevaInformacion.getActividad_idActividad());
+                    System.out.println("idActividad " +  entregaNuevaInformacion.getActividad_idActividad());
+                    prepararSentencia.executeUpdate();
+
+                codigoRespuesta = Constantes.OPERACION_EXITOSA;
+            } catch (SQLException e) {
+                codigoRespuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            codigoRespuesta = Constantes.ERROR_CONEXION;
+        }
+
+        return codigoRespuesta;
+    }
+
+    public static POJEntrega obtenerIdEntrega(POJEntrega entregaRegistrada) throws SQLException{
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         POJEntrega respuestaBD = new POJEntrega();
@@ -119,9 +146,7 @@ public class DAOEntrega {
                 respuestaBD.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 if (resultado.next()) {
                     int idEntrega = resultado.getInt("idEntrega");
-                    System.out.println("idUsuario DAO"+ idEntrega);
                     respuestaBD.setIdEntrega(idEntrega);
-                    
                 }
             } catch (SQLException ex) {
                 respuestaBD.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
@@ -132,7 +157,7 @@ public class DAOEntrega {
         return respuestaBD;
     }
     
-    public static POJArchivosRespuesta obtenerArchivosEntregaPorId(int idEntrega){
+    public static POJArchivosRespuesta obtenerArchivosEntregaPorId(int idEntrega) throws SQLException{
         POJArchivosRespuesta respuestaBD = new POJArchivosRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -177,7 +202,7 @@ public class DAOEntrega {
         return respuestaBD;
     }
     
-    public static int registrarCalificacion(POJEntrega entregaARegistrar) {
+    public static int registrarCalificacion(POJEntrega entregaARegistrar) throws SQLException {
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         int codigoRespuesta;

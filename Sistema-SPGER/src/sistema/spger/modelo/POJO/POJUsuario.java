@@ -31,7 +31,7 @@ public class POJUsuario {
     
     @Override
     public String toString() {
-        return nombreCompleto;
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
 
     public int getIdUsuario() {
@@ -105,6 +105,7 @@ public class POJUsuario {
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
     }
+
     
 
 }

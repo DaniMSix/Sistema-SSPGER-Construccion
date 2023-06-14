@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchoPnPrincipal" prefHeight="513.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLPantallaPrincipalController">
+<AnchorPane id="AnchorPane" fx:id="anchoPnPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistema.spger.controladores.FXMLPantallaPrincipalController">
    <children>
-      <MenuBar fx:id="menuBOpciones" prefHeight="39.0" prefWidth="817.0" style="-fx-background-color: #7FBCD2;">
+      <MenuBar fx:id="menuBOpciones" prefHeight="39.0" prefWidth="817.0" style="-fx-background-color: B0DAFF;">
         <menus>
           <Menu mnemonicParsing="false" text="Cambiar de vista">
             <items>
@@ -18,29 +19,25 @@
                   <MenuItem fx:id="mItemProfesor" mnemonicParsing="false" onAction="#clicMItemProfesor" text="Profesor" />
                   <MenuItem fx:id="mItemDirector" mnemonicParsing="false" onAction="#clicMItemDirector" text="Director" />
                   <MenuItem fx:id="mItemResponsableCA" mnemonicParsing="false" onAction="#clicMItemResponsableCA" text="Responsable CA" />
-                  <MenuItem fx:id="mItemEstudiante" mnemonicParsing="false" onAction="#clicMItemEstudiante" text="Estudiante" />
                 
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <ImageView fitHeight="476.0" fitWidth="817.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="416.0" fitWidth="817.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../utils/imagenes/Pantalla-principal_1.png" />
+            <Image url="@../utils/imagenes/Pantalla.png" />
          </image>
       </ImageView>
-      <Label layoutX="511.0" layoutY="123.0" prefHeight="136.0" prefWidth="186.0" text="¿Qué deseas" textAlignment="CENTER">
+      <Pane layoutY="39.0" prefHeight="416.0" prefWidth="428.0">
+         <children>
+            <Button fx:id="btnProyectoGuiado" layoutX="136.0" layoutY="255.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clicBotonProyectoGuiado" style="-fx-background-color: B9D7EA;" text="Proyecto Guiado" visible="false" />
+            <Button fx:id="btnExperienciaRecepcional" layoutX="103.0" layoutY="302.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clicBotonExperienciaRecepcional" style="-fx-background-color: F0EB8D;" text="Experiencia Recepcional" visible="false" />
+         </children>
+      </Pane>
+      <Button layoutX="616.0" layoutY="405.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clicBotonSalir" style="-fx-background-color: FF6969;" text="Salir">
          <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="528.0" layoutY="205.0" text="hacer hoy?">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font></Label>
-      <Label fx:id="lbNombreUsuario" layoutX="315.0" layoutY="205.0">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font></Label>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

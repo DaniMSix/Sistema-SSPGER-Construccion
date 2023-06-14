@@ -12,7 +12,7 @@ import sistema.spger.utils.Constantes;
 
 public class DAOActividadEntrega {
     
-    public static POJActividadEntregaRespuesta obtenerEntregaActividades(int idEstudiante, int idCurso) {
+    public static POJActividadEntregaRespuesta obtenerEntregaActividades(int idEstudiante, int idCurso) throws SQLException {
         POJActividadEntregaRespuesta respuestaBD = new POJActividadEntregaRespuesta();
         ArrayList<POJActividadEntrega> actividadConsulta = new ArrayList();
         
@@ -60,7 +60,7 @@ public class DAOActividadEntrega {
         return respuestaBD;
     }
     
-    public static POJActividadEntrega obtenerActividadPorId(int idActividad) {
+    public static POJActividadEntrega obtenerActividadPorId(int idActividad) throws SQLException {
         POJActividadEntrega respuestaBD = new POJActividadEntrega();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -88,7 +88,7 @@ public class DAOActividadEntrega {
         return respuestaBD;
     }
     
-    public static POJActividadEntrega obtenerActividadEntregaPorIdActividad(int idActividad){
+    public static POJActividadEntrega obtenerActividadEntregaPorIdActividad(int idActividad) throws SQLException{
         POJActividadEntrega respuestaBD = new POJActividadEntrega();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();

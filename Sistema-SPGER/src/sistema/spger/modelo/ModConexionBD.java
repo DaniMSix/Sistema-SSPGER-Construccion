@@ -1,5 +1,6 @@
 package sistema.spger.modelo;
 
+import java.nio.file.AccessDeniedException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,21 +15,22 @@ public class ModConexionBD {
     private final String url="jdbc:mysql://localhost:3307/spger?allowPublicKeyRetrieval=true&useSSL=false";
     private DBAUsuarioBD usuarioBD;
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+    try {
         connect();
-        
-        return connection;
+    } catch (SQLException ex) {
+        // Realiza las acciones necesarias en caso de error de conexión
+        throw ex; // Relanza la excepción para que sea manejada por el código que llama a getConnection()
     }
+    
+    return connection;
+}
 
-    private void connect() {
-        usuarioBD = DBAObtenerUsuario.leerArchivoUsuario();
-        try {
-            connection = DriverManager.getConnection(url,usuarioBD.getUsuario(), usuarioBD.getContrasenia());
-        } catch (SQLException ex) {
-            Logger.getLogger(ModConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-    }
+
+    private void connect() throws SQLException {
+    usuarioBD = DBAObtenerUsuario.leerArchivoUsuario();
+    connection = DriverManager.getConnection(url, usuarioBD.getUsuario(), usuarioBD.getContrasenia());
+}
 
     public void closeConection(){
         if(connection!=null){

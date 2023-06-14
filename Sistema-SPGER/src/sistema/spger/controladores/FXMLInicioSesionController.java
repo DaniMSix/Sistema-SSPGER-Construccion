@@ -2,6 +2,7 @@ package sistema.spger.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,17 +41,17 @@ public class FXMLInicioSesionController implements Initializable {
     }    
 
     @FXML
-    private void clicIniciarSesion(ActionEvent event) {
+    private void clicIniciarSesion(ActionEvent event) throws SQLException {
         obtenerInformacionIngresada();
     }
     
-    private void obtenerInformacionIngresada(){
+    private void obtenerInformacionIngresada() throws SQLException{
         String correo = tfCorreo.getText();
         String contrasenia = pfContrasenia.getText();
         validarInformacion(correo, contrasenia);
     }
     
-    public void validarInformacion(String correo, String contrasenia){
+    public void validarInformacion(String correo, String contrasenia) throws SQLException{
         
         boolean datosValidos = true;
         
@@ -71,7 +72,7 @@ public class FXMLInicioSesionController implements Initializable {
         
     }
     
-    public void validarCredencialesUsuario(String correo, String contrasenia) {
+    public void validarCredencialesUsuario(String correo, String contrasenia) throws SQLException {
         List<POJRol> listaRoles = new ArrayList<>();
         POJUsuario usuarioRespuesta = DAOSesion.verificarSesionUsuario(correo, contrasenia);
         
@@ -117,7 +118,6 @@ public class FXMLInicioSesionController implements Initializable {
             pantallaPrincipal.prepararRolesUsuario(respuestaBD, usuarioVerificado);
             escena = new Scene(vista);
             escenarioBase.setScene(escena);
-            escenarioBase.setAlwaysOnTop(true);
             escenarioBase.show();
             escenarioBase.setTitle("SSPGER");
         } catch (IOException ex) {

@@ -12,7 +12,7 @@ import sistema.spger.utils.Constantes;
 
 
 public class DAOUsuario {
-    public static POJUsuario registrarUsuario(POJUsuario usuarioARegistrar) {
+    public static POJUsuario registrarUsuario(POJUsuario usuarioARegistrar) throws SQLException {
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         if (conexion != null){
@@ -41,7 +41,7 @@ public class DAOUsuario {
         return usuarioARegistrar;
     }
     
-    public static POJUsuario obtenerIdDeUsuarioRegistrado(POJUsuario usuarioRegistrado){
+    public static POJUsuario obtenerIdDeUsuarioRegistrado(POJUsuario usuarioRegistrado) throws SQLException{
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
         
@@ -71,7 +71,7 @@ public class DAOUsuario {
         return usuarioRegistrado;
     }
     
-    public static POJUsuarioRespuesta comprobarInformacionDuplicada(POJUsuario usuarioARegistrar){
+    public static POJUsuarioRespuesta comprobarInformacionDuplicada(POJUsuario usuarioARegistrar) throws SQLException{
         POJUsuarioRespuesta respuestaConsulta = new POJUsuarioRespuesta();
         ModConexionBD abrirConexion = new ModConexionBD();
         Connection conexion = abrirConexion.getConnection();
@@ -104,7 +104,7 @@ public class DAOUsuario {
         return respuestaConsulta;
     }
     
-    public static POJUsuarioRespuesta obtenerUsuarios(){
+    public static POJUsuarioRespuesta obtenerUsuarios() throws SQLException{
         
         POJUsuarioRespuesta respuesta = new POJUsuarioRespuesta();
         ArrayList<POJUsuario> usuarioConsulta = new ArrayList();
@@ -139,7 +139,7 @@ public class DAOUsuario {
         return respuesta;
     }
         
-    public static POJUsuario obtenerUsuarioPorId(int idUsuario){
+    public static POJUsuario obtenerUsuarioPorId(int idUsuario) throws SQLException{
         POJUsuario usuarioRespuesta = new POJUsuario();
         ModConexionBD abrirConexion = new ModConexionBD();
         ArrayList<POJUsuario> usuarios = new ArrayList();
